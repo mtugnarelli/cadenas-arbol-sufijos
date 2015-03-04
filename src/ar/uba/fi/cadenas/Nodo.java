@@ -2,6 +2,7 @@ package ar.uba.fi.cadenas;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Nodo {
@@ -18,7 +19,6 @@ public abstract class Nodo {
         
         this.padre = padre;
         this.inicio = indice;
-        this.padre.hijos.add(this);
     }
 
     public List<Nodo> hijos() {
@@ -52,10 +52,18 @@ public abstract class Nodo {
         return new Hoja(padre, numero, inicio, fin);
     }
     
-    public static Nodo interior(Nodo padre, int inicio, int fin) {
+    public static Nodo interior(Nodo padre, ListIterator<Nodo> itHijos, int inicio, int fin) {
         
-        return new Interior(padre, inicio, fin);
+        return new Interior(padre, itHijos, inicio, fin);
     }
+    
+    public Integer longitud() {
+
+        return this.fin() - this.inicio() + 1;
+    }
+    
+    public abstract void agregar(Nodo hijo);
+    
 
     private static class Raiz extends Nodo {
         
@@ -77,6 +85,13 @@ public abstract class Nodo {
         public boolean esRaiz() {
             return true;
         }
+
+        @Override
+        public void agregar(Nodo hijo) {
+            
+            this.hijos().add(hijo);
+            hijo.padre = this;
+        }
     }
     
     private static class Hoja extends Nodo {
@@ -89,6 +104,7 @@ public abstract class Nodo {
             super(padre, inicio);
             this.numero = numero;
             this.fin = fin;
+            padre.agregar(this);
         }
 
         @Override
@@ -108,16 +124,29 @@ public abstract class Nodo {
 
             return false;
         }
+        
+        @Override
+        public void agregar(Nodo hijo) {
+         
+            throw new UnsupportedOperationException("No se pueden agregar hijos a las hojas");
+        }
     }
     
     private static class Interior extends Nodo {
         
         private int fin;
         
-        public Interior(Nodo padre, int inicio, int fin) {
+        public Interior(Nodo padre, ListIterator<Nodo> itHijos, int inicio, int fin) {
             
             super(padre, inicio);
             this.fin = fin;
+
+            /* reenlaza la estructura */
+            Nodo hijo = itHijos.previous();
+            itHijos.set(this);
+            this.hijos().add(hijo);
+            hijo.padre = this;
+            hijo.inicio = fin() + 1;
         }
 
         @Override
@@ -137,5 +166,13 @@ public abstract class Nodo {
 
             return false;
         }
+        
+        @Override
+        public void agregar(Nodo hijo) {
+        
+            this.hijos().add(hijo);
+            hijo.padre = this;
+        }
     }
+
 }

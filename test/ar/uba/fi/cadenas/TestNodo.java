@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
@@ -24,23 +25,38 @@ public class TestNodo {
     public void construirInterior() {
         
         final Nodo padre = Nodo.raiz();
-        Nodo nodo = Nodo.interior(padre, 2, 10);
+        final Nodo hoja = Nodo.hoja(padre, 1, 0, new AtomicInteger(10));
+        
+        ListIterator<Nodo> itHijos = padre.hijos().listIterator();
+        itHijos.next();
+        
+        Nodo nodo = Nodo.interior(padre, itHijos, 0, 5);
         
         assertThat(nodo.padre(), is( sameInstance( padre )));
-        assertThat(nodo.inicio(), is( equalTo( 2 )));
-        assertThat(nodo.fin(), is( equalTo( 10 )));
+        assertThat(nodo.inicio(), is( equalTo( 0 )));
+        assertThat(nodo.fin(), is( equalTo( 5 )));
         assertThat(nodo.numero(), is( nullValue( )));
         assertThat(nodo.esRaiz(), is( equalTo( false )));
+        assertThat(nodo.longitud(), is( equalTo( 6 )));
     }
 
     @Test
     public void construirInteriorEnlazaNodos() {
         
         final Nodo padre = Nodo.raiz();
-        Nodo nodo = Nodo.interior(padre, 2, 10);
+        final Nodo hoja = Nodo.hoja(padre, 1, 0, new AtomicInteger(10));
+        
+        ListIterator<Nodo> itHijos = padre.hijos().listIterator();
+        itHijos.next();
+        
+        Nodo nodo = Nodo.interior(padre, itHijos, 2, 10);
 
         assertThat(padre.hijos().size(), is( equalTo( 1 )));
         assertThat(padre.hijos(), hasItem( nodo ));
+        
+        assertThat(hoja.padre(), is( sameInstance( nodo )));
+        assertThat(nodo.hijos().size(), is( equalTo( 1 )));
+        assertThat(nodo.hijos(), hasItem( hoja ));
     }
     
 

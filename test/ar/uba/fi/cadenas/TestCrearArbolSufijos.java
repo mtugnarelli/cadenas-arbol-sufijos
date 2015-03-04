@@ -40,7 +40,7 @@ public class TestCrearArbolSufijos {
         
         Nodo hijo = arbol.raiz().hijos().get(0);
         assertThat(hijo.inicio(), is( equalTo( 0 )));
-        assertThat(hijo.fin(), is( equalTo( 1 )));
+        assertThat(hijo.fin(), is( equalTo( 0 )));
     }
     
     @Test
@@ -55,15 +55,73 @@ public class TestCrearArbolSufijos {
         assertThat(arbol.raiz().hijos(), is( notNullValue( )));
         assertThat(arbol.raiz().hijos().size(), is( equalTo( 2 )));
         
-        Nodo hijo1 = arbol.raiz().hijos().get(0);
-        assertThat(hijo1.inicio(), is( equalTo( 0 )));
-        assertThat(hijo1.fin(), is( equalTo( 1 )));
-        assertThat(hijo1.numero(), is( equalTo( 0 )));
-        
-        Nodo hijo2 = arbol.raiz().hijos().get(1);
-        assertThat(hijo2.inicio(), is( equalTo( 1 )));
-        assertThat(hijo2.fin(), is( equalTo( 1 )));
-        assertThat(hijo2.numero(), is( equalTo( 1 )));
+        assertNodo(arbol.raiz().hijos().get(0), 0, 1, 0);
+        assertNodo(arbol.raiz().hijos().get(1), 1, 1, 1);
     }
     
+    @Test
+    public void ejecutarConCadenaDeLongitud3Diferentes() {
+        
+        CrearArbolSufijos crear = new CrearArbolSufijos("abc");
+
+        ArbolSufijos arbol = crear.ejecutar();
+        
+        assertThat(arbol.raiz().hijos().size(), is( equalTo( 3 )));
+        
+        assertNodo(arbol.raiz().hijos().get(0), 0, 2, 0);
+        assertNodo(arbol.raiz().hijos().get(1), 1, 2, 1);
+        assertNodo(arbol.raiz().hijos().get(2), 2, 2, 2);
+    }
+    
+    @Test
+    public void ejecutarConCadenaDeLongitud4Diferentes() {
+        
+        CrearArbolSufijos crear = new CrearArbolSufijos("abce");
+
+        ArbolSufijos arbol = crear.ejecutar();
+        
+        assertThat(arbol.raiz().hijos().size(), is( equalTo( 4 )));
+        
+        assertNodo(arbol.raiz().hijos().get(0), 0, 3, 0);
+        assertNodo(arbol.raiz().hijos().get(1), 1, 3, 1);
+        assertNodo(arbol.raiz().hijos().get(2), 2, 3, 2);
+        assertNodo(arbol.raiz().hijos().get(3), 3, 3, 3);
+    }
+    
+    @Test
+    public void ejecutarConCadenaDeLongitud2PeroIguales() {
+        
+        CrearArbolSufijos crear = new CrearArbolSufijos("aa");
+
+        ArbolSufijos arbol = crear.ejecutar();
+        
+        assertThat(arbol.raiz().hijos().size(), is( equalTo( 1 )));
+        assertNodo(arbol.raiz().hijos().get(0), 0, 0, null);
+        
+        assertThat(arbol.raiz().hijos().get(0).hijos().size(), is( equalTo( 1 )));
+        assertNodo(arbol.raiz().hijos().get(0).hijos().get(0), 1, 1, 0);
+    }
+
+    @Test
+    public void ejecutarConCadenaDeLongitud3ConDosIgualesAdelanteYAtras() {
+        
+        CrearArbolSufijos crear = new CrearArbolSufijos("aba");
+
+        ArbolSufijos arbol = crear.ejecutar();
+        
+        assertThat(arbol.raiz().hijos().size(), is( equalTo( 2 )));
+        assertNodo(arbol.raiz().hijos().get(0), 0, 0, null);
+        assertNodo(arbol.raiz().hijos().get(1), 1, 2, 1);
+        
+        assertThat(arbol.raiz().hijos().get(0).hijos().size(), is( equalTo( 1 )));
+        assertNodo(arbol.raiz().hijos().get(0).hijos().get(0), 1, 2, 0);
+    }
+
+
+    protected void assertNodo(Nodo nodo, int inicio, int fin, Integer numero) {
+        
+        assertThat(nodo.numero(), is( equalTo( numero )));
+        assertThat(nodo.inicio(), is( equalTo( inicio )));
+        assertThat(nodo.fin(), is( equalTo( fin )));
+    }
 }
