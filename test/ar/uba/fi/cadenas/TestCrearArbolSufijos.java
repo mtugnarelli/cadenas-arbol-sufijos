@@ -117,11 +117,26 @@ public class TestCrearArbolSufijos {
         assertNodo(arbol.raiz().hijos().get(0).hijos().get(0), 1, 2, 0);
     }
 
+    @Test
+    public void ejecutarConCadenaDeLongitud4ConDosIgualesAdelanteYAtras() {
+        
+        CrearArbolSufijos crear = new CrearArbolSufijos("abca");
 
+        ArbolSufijos arbol = crear.ejecutar();
+        
+        assertThat(arbol.raiz().hijos().size(), is( equalTo( 3 )));
+        assertNodo(arbol.raiz().hijos().get(0), 0, 0, null);
+        assertNodo(arbol.raiz().hijos().get(1), 1, 3, 1);
+        assertNodo(arbol.raiz().hijos().get(2), 2, 3, 2);
+        
+        assertThat(arbol.raiz().hijos().get(0).hijos().size(), is( equalTo( 1 )));
+        assertNodo(arbol.raiz().hijos().get(0).hijos().get(0), 1, 3, 0);
+    }
+    
     protected void assertNodo(Nodo nodo, int inicio, int fin, Integer numero) {
         
-        assertThat(nodo.numero(), is( equalTo( numero )));
-        assertThat(nodo.inicio(), is( equalTo( inicio )));
-        assertThat(nodo.fin(), is( equalTo( fin )));
+        assertThat("numero", nodo.numero(), is( equalTo( numero )));
+        assertThat("inicio", nodo.inicio(), is( equalTo( inicio )));
+        assertThat("fin", nodo.fin(), is( equalTo( fin )));
     }
 }
