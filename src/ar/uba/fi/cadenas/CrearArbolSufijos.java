@@ -1,5 +1,7 @@
 package ar.uba.fi.cadenas;
 
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CrearArbolSufijos {
@@ -29,6 +31,24 @@ public class CrearArbolSufijos {
                     
                     Nodo anterior = hojaj_1i.padre();
                     
+                    if (anterior.esRaiz()) {
+
+                        Iterator<Nodo> itHijos = anterior.hijos().listIterator();
+                        
+                        Nodo hijo;
+
+                        boolean encontrado = false;
+                        do {
+                        
+                            hijo = itHijos.next();
+                            
+                            for (int h = 0; ; h++) {
+                                
+                                
+                            }
+                            
+                        } while (itHijos.hasNext() && !encontrado);
+                    }
                 }
             }
             

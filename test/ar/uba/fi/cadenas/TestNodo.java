@@ -30,6 +30,7 @@ public class TestNodo {
         assertThat(nodo.indice(), is( equalTo( 2 )));
         assertThat(nodo.longitud(), is( equalTo( 10 )));
         assertThat(nodo.numero(), is( nullValue( )));
+        assertThat(nodo.esRaiz(), is( equalTo( false )));
     }
 
     @Test
@@ -56,5 +57,6 @@ public class TestNodo {
         assertThat(hoja.numero(), is( equalTo( numero )));
         assertThat(hoja.indice(), is( equalTo( indice )));
         assertThat(hoja.longitud(), is( equalTo( 23 )));
+        assertThat(hoja.esRaiz(), is( equalTo( false )));
     }
 }

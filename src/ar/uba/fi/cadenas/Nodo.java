@@ -93,17 +93,20 @@ public abstract class Nodo {
 
         @Override
         public int longitud() {
+
             return this.longitud.get();
         }
 
         @Override
         public Integer numero() {
+
             return this.numero;
         }
 
         @Override
         public boolean esRaiz() {
-            return true;
+
+            return false;
         }
     }
     
@@ -132,7 +135,7 @@ public abstract class Nodo {
         @Override
         public boolean esRaiz() {
 
-            return true;
+            return false;
         }
     }
 }
