@@ -39,8 +39,8 @@ public class TestCrearArbolSufijos {
         assertThat(arbol.raiz().hijos().size(), is( equalTo( 1 )));
         
         Nodo hijo = arbol.raiz().hijos().get(0);
-        assertThat(hijo.indice(), is( equalTo( 0 )));
-        assertThat(hijo.longitud(), is( equalTo( 1 )));
+        assertThat(hijo.inicio(), is( equalTo( 0 )));
+        assertThat(hijo.fin(), is( equalTo( 1 )));
     }
     
     @Test
@@ -56,11 +56,14 @@ public class TestCrearArbolSufijos {
         assertThat(arbol.raiz().hijos().size(), is( equalTo( 2 )));
         
         Nodo hijo1 = arbol.raiz().hijos().get(0);
-        assertThat(hijo1.indice(), is( equalTo( 0 )));
-        assertThat(hijo1.longitud(), is( equalTo( 2 )));
+        assertThat(hijo1.inicio(), is( equalTo( 0 )));
+        assertThat(hijo1.fin(), is( equalTo( 1 )));
+        assertThat(hijo1.numero(), is( equalTo( 0 )));
         
         Nodo hijo2 = arbol.raiz().hijos().get(1);
-        assertThat(hijo2.indice(), is( equalTo( 0 )));
-        assertThat(hijo2.longitud(), is( equalTo( 1 )));
+        assertThat(hijo2.inicio(), is( equalTo( 1 )));
+        assertThat(hijo2.fin(), is( equalTo( 1 )));
+        assertThat(hijo2.numero(), is( equalTo( 1 )));
     }
+    
 }

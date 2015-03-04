@@ -19,15 +19,15 @@ public class CrearArbolSufijos {
 
         if (!this.texto.isEmpty()) {
             
-            AtomicInteger longitud = new AtomicInteger(1);
-            Nodo hojaj_1i = Nodo.hoja(arbol.raiz(), 0, 0, longitud);
+            AtomicInteger fin = new AtomicInteger(0);
+            Nodo hojaj_1i = Nodo.hoja(arbol.raiz(), 0, 0, fin);
             
             for (int i = 0; i < this.texto.length() - 1; i++) { /* fase i + 1 */
                 
-                /* extensión 1 */
-                longitud.incrementAndGet();
+                /* extensión j */
                 
-                for (int j = 2; j <= (i + 1); j++) { /* extensión j > 1 */
+                fin.incrementAndGet();
+                for (int j = 1; j <= (i + 1); j++) {
                     
                     Nodo anterior = hojaj_1i.padre();
                     
@@ -38,16 +38,21 @@ public class CrearArbolSufijos {
                         Nodo hijo;
 
                         boolean encontrado = false;
-                        do {
+                        while (itHijos.hasNext() && !encontrado) {
                         
                             hijo = itHijos.next();
+                            encontrado = this.texto.charAt(j) == this.texto.charAt(hijo.inicio());
+                        }
+                        
+                        if (! encontrado) {
                             
-                            for (int h = 0; ; h++) {
-                                
-                                
-                            }
+                            /* agrega el nuevo sufijo */
+                            Nodo.hoja(anterior, j, j, fin);
+                        
+                        } else {
+                        
                             
-                        } while (itHijos.hasNext() && !encontrado);
+                        }
                     }
                 }
             }

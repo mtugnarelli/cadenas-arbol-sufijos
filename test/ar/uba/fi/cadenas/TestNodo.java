@@ -27,8 +27,8 @@ public class TestNodo {
         Nodo nodo = Nodo.interior(padre, 2, 10);
         
         assertThat(nodo.padre(), is( sameInstance( padre )));
-        assertThat(nodo.indice(), is( equalTo( 2 )));
-        assertThat(nodo.longitud(), is( equalTo( 10 )));
+        assertThat(nodo.inicio(), is( equalTo( 2 )));
+        assertThat(nodo.fin(), is( equalTo( 10 )));
         assertThat(nodo.numero(), is( nullValue( )));
         assertThat(nodo.esRaiz(), is( equalTo( false )));
     }
@@ -55,8 +55,8 @@ public class TestNodo {
         
         assertThat(hoja.padre(), is( sameInstance( padre )));
         assertThat(hoja.numero(), is( equalTo( numero )));
-        assertThat(hoja.indice(), is( equalTo( indice )));
-        assertThat(hoja.longitud(), is( equalTo( 23 )));
+        assertThat(hoja.inicio(), is( equalTo( indice )));
+        assertThat(hoja.fin(), is( equalTo( 23 )));
         assertThat(hoja.esRaiz(), is( equalTo( false )));
     }
 }

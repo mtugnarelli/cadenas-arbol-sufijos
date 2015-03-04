@@ -8,7 +8,7 @@ public abstract class Nodo {
 
     private List<Nodo> hijos = new LinkedList<Nodo>();
     private Nodo padre;
-    private int indice;
+    private int inicio;
     
     private Nodo() {
         
@@ -17,7 +17,7 @@ public abstract class Nodo {
     private Nodo(Nodo padre, int indice) {
         
         this.padre = padre;
-        this.indice = indice;
+        this.inicio = indice;
         this.padre.hijos.add(this);
     }
 
@@ -31,12 +31,12 @@ public abstract class Nodo {
         return this.padre;
     }
 
-    public int indice() {
+    public int inicio() {
 
-        return this.indice;
+        return this.inicio;
     }
 
-    public abstract int longitud();
+    public abstract int fin();
     
     public abstract Integer numero();
 
@@ -47,14 +47,14 @@ public abstract class Nodo {
 
     public abstract boolean esRaiz();
     
-    public static Nodo hoja(Nodo padre, int numero, int indice, AtomicInteger longitud) {
+    public static Nodo hoja(Nodo padre, int numero, int inicio, AtomicInteger fin) {
 
-        return new Hoja(padre, numero, indice, longitud);
+        return new Hoja(padre, numero, inicio, fin);
     }
     
-    public static Nodo interior(Nodo padre, int indice, int longitud) {
+    public static Nodo interior(Nodo padre, int inicio, int fin) {
         
-        return new Interior(padre, indice, longitud);
+        return new Interior(padre, inicio, fin);
     }
 
     private static class Raiz extends Nodo {
@@ -64,7 +64,7 @@ public abstract class Nodo {
         }
 
         @Override
-        public int longitud() {
+        public int fin() {
             return 0;
         }
 
@@ -81,20 +81,20 @@ public abstract class Nodo {
     
     private static class Hoja extends Nodo {
         
-        private AtomicInteger longitud;
+        private AtomicInteger fin;
         private Integer numero;
         
-        public Hoja(Nodo padre, int numero, int indice, AtomicInteger longitud) {
+        public Hoja(Nodo padre, int numero, int inicio, AtomicInteger fin) {
 
-            super(padre, indice);
+            super(padre, inicio);
             this.numero = numero;
-            this.longitud = longitud;
+            this.fin = fin;
         }
 
         @Override
-        public int longitud() {
+        public int fin() {
 
-            return this.longitud.get();
+            return this.fin.get();
         }
 
         @Override
@@ -112,18 +112,18 @@ public abstract class Nodo {
     
     private static class Interior extends Nodo {
         
-        private int longitud;
+        private int fin;
         
-        public Interior(Nodo padre, int indice, int longitud) {
+        public Interior(Nodo padre, int inicio, int fin) {
             
-            super(padre, indice);
-            this.longitud = longitud;
+            super(padre, inicio);
+            this.fin = fin;
         }
 
         @Override
-        public int longitud() {
+        public int fin() {
 
-            return this.longitud;
+            return this.fin;
         }
 
         @Override
